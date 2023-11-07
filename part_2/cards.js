@@ -14,7 +14,7 @@ async function requestCard() {
         console.log(`Card value is ${value} and card suit is ${suit}`);
     } catch (e) {
         console.log("Error!", e);
-    }
+    };
 };
 
 requestCard();
@@ -58,7 +58,7 @@ async function requestCards() {
         
         button.addEventListener('click', async () => {
             let deck = await axios.get(`https://deckofcardsapi.com/api/deck/${deckid}/draw/?count=1`);
-            console.log(`Cards remaining: ${deck.data.remaining}`)
+            console.log(`Cards remaining: ${deck.data.remaining}`);
 
             let cardSrc = deck.data.cards[0].image;
 
@@ -67,10 +67,10 @@ async function requestCards() {
             board.append(newImg);
 
             if (deck.data.remaining === 0) {
-                console.log("OUT OF CARDS!")
+                console.log("OUT OF CARDS!");
                 body.removeChild(button);
             }
-        })
+        });
     } catch (e) {
         console.log("Card game failed!", e);
     };
