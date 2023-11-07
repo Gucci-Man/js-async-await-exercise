@@ -50,28 +50,30 @@ const board = document.querySelector("#board")
 const body = document.querySelector("body");
 let deckid = null;
 
-axios.get(url)
-.then(res => {
-    deckid = res.data.deck_id;
-})
-.catch(err => console.log("Rejected!", err))
+async function requestCards() {
 
-button.addEventListener('click', () => {
-    axios.get(`https://deckofcardsapi.com/api/deck/${deckid}/draw/?count=1`)
-    .then( res => {
+    try {
+        let res = await axios.get(url);
+        deckid = res.data.deck_id;
         
-        console.log(`Cards remaining: ${res.data.remaining}`)
-        let cardSrc = res.data.cards[0].image;
+        button.addEventListener('click', async () => {
+            let deck = await axios.get(`https://deckofcardsapi.com/api/deck/${deckid}/draw/?count=1`);
+            console.log(`Cards remaining: ${deck.data.remaining}`)
 
-        const newImg = document.createElement("img");
-        newImg.setAttribute("src", cardSrc);
-        board.append(newImg);
+            let cardSrc = deck.data.cards[0].image;
 
-        if (res.data.remaining === 0) {
-            console.log("OUT OF CARDS!")
-             body.removeChild(button);
-        }
-    })
-    .catch( err => console.log("Rejected!", err)
-    );
-});
+            const newImg = document.createElement("img");
+            newImg.setAttribute("src", cardSrc);
+            board.append(newImg);
+
+            if (deck.data.remaining === 0) {
+                console.log("OUT OF CARDS!")
+                body.removeChild(button);
+            }
+        })
+    } catch (e) {
+        console.log("Card game failed!", e);
+    };
+};
+
+requestCards();
