@@ -29,9 +29,6 @@ const threeLi = document.createElement("li");
 const fourLi = document.createElement("li");
 
 let numberPromises = []; // to store promises
-let responseArr = []; // to store responses
-
-secondLi = document.createElement("li");
 
 for (let i = 1; i < 5; i++) {
     numberPromises.push(
@@ -69,33 +66,26 @@ const liTwo = document.createElement("li");
 const liThree = document.createElement("li");
 const liFour = document.createElement("li");
 
-axios.get(url)
-.then(res => {
-    console.log("First Promise resolved")
-    console.log(res.data.text)
-    liOne.innerText = res.data.text;
-    ol.append(liOne)
-    return axios.get(url)
-})
-.then(res => {
-    console.log("Second Promise resolved")
-    console.log(res.data.text)
-    liTwo.innerText = res.data.text;
-    ol.append(liTwo)
-    return axios.get(url)
-})
-.then(res => {
-    console.log("Third Promise resolved")
-    console.log(res.data.text)
-    liThree.innerText = res.data.text;
-    ol.append(liThree)
-    return axios.get(url)
-})
-.then(res => {
-    console.log("Forth Promise resolved")
-    console.log(res.data.text)
-    liFour.innerText = res.data.text;
-    ol.append(liFour)
-    return axios.get(url)
-})
-.catch(err => console.log("REJECTED!", err))
+async function favNumberFacts() {
+
+    try {
+        let f1 = await axios.get(url);
+        let f2 = await axios.get(url);
+        let f3 = await axios.get(url);
+        let f4 = await axios.get(url);
+
+        liOne.innerText = f1.data.text;
+        liTwo.innerText = f2.data.text;
+        liThree.innerText = f3.data.text;
+        liFour.innerText = f4.data.text;
+
+        ol.append(liOne);
+        ol.append(liTwo);
+        ol.append(liThree);
+        ol.append(liFour);
+    } catch (e) {
+        console.log("Error!", e);
+    }
+};
+
+favNumberFacts();
