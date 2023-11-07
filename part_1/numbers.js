@@ -69,10 +69,15 @@ const liFour = document.createElement("li");
 async function favNumberFacts() {
 
     try {
-        let f1 = await axios.get(url);
-        let f2 = await axios.get(url);
-        let f3 = await axios.get(url);
-        let f4 = await axios.get(url);
+        let promise1 = axios.get(url);
+        let promise2 = axios.get(url);
+        let promise3 = axios.get(url);
+        let promise4 = axios.get(url);
+
+        let f1 = await promise1;
+        let f2 = await promise2;
+        let f3 = await promise3;
+        let f4 = await promise4;
 
         liOne.innerText = f1.data.text;
         liTwo.innerText = f2.data.text;
