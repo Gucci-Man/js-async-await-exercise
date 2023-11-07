@@ -1,7 +1,24 @@
 // 1.
 
 let url = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1"
-axios.get(url)
+
+async function requestCard() {
+    try {
+        let res = await axios.get(url);
+        let deck_id = res.data.deck_id;
+
+        let card = await axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`)
+
+        let value = card.data.cards[0].value;
+        let suit = card.data.cards[0].suit;
+        console.log(`Card value is ${value} and card suit is ${suit}`);
+    } catch (e) {
+        console.log("Error!", e);
+    }
+};
+
+requestCard();
+/* axios.get(url)
 .then(res => {
 
     let deck_id = res.data.deck_id;
@@ -12,7 +29,7 @@ axios.get(url)
     let suit = res.data.cards[0].suit;
     console.log(`Card value is ${value} and card suit is ${suit}`);
 })
-.catch(err => console.log("Rejected!", err))
+.catch(err => console.log("Rejected!", err)) */
 
 // 2. 
 
