@@ -39,26 +39,27 @@ for (let i = 1; i < 5; i++) {
     );
   }
 
-Promise.all(numberPromises)
-    .then(numbersArr => {
-        for (res of numbersArr) {
-            console.log(res.data.text)
-            responseArr.push(res.data.text)
-        }
+async function multiNumberFacts() {
 
-        console.log(`length of array is ${numbersArr.length}`)
-        oneLi.innerText = responseArr[0];
-        twoLi.innerText = responseArr[1];
-        threeLi.innerText = responseArr[2];
-        fourLi.innerText = responseArr[3];
+    try {
+        let respArr = await Promise.all(numberPromises);
+
+        /* console.log(`length of array is ${respArr.length}`);
+        console.log(respArr); */
+        oneLi.innerText = respArr[0].data.text;
+        twoLi.innerText = respArr[1].data.text;
+        threeLi.innerText = respArr[2].data.text;
+        fourLi.innerText = respArr[3].data.text;
 
         ul.append(oneLi);
         ul.append(twoLi);
         ul.append(threeLi);
         ul.append(fourLi);
-  
-    })
-    .catch(err => console.log("REJECTED!", err))
+    } catch (e) {
+        console.log("Error!", e);
+    }
+}
+multiNumberFacts();
 
 // 3. Use API to get 4 facts on your favorite number. Once you have them all, put them on the page.
 
