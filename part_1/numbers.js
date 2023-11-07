@@ -4,14 +4,21 @@ const p = document.createElement("p");
 // 1. Get a fact about your favorite number (90)
 
 let url = "http://numbersapi.com/90?json"
-axios.get(url)
-.then(res => {
-    console.log(res.data.text)
 
-    p.innerText = res.data.text;
-    div1.append(p)
-})
-.catch(err => console.log("REJECTED!", err))
+async function getFavoriteNumber() {
+    try {
+        const res = await axios.get(url);
+
+        console.log(res.data.text);
+        p.innerText = res.data.text;
+        div1.append(p);
+    } catch (e) {
+        console.log("Error!", e.message);
+    }
+    
+};
+
+getFavoriteNumber();
 
 // 2. Get data on multiple numbers in a single request
 
