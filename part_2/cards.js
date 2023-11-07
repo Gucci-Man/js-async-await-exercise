@@ -18,44 +18,30 @@ async function requestCard() {
 };
 
 requestCard();
-/* axios.get(url)
-.then(res => {
-
-    let deck_id = res.data.deck_id;
-    return axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`)
-})
-.then(res => {
-    let value = res.data.cards[0].value;
-    let suit = res.data.cards[0].suit;
-    console.log(`Card value is ${value} and card suit is ${suit}`);
-})
-.catch(err => console.log("Rejected!", err)) */
 
 // 2. 
 
-let = cardsArr = []; // will hold the two card promises
-axios.get(url)
-.then(res => {
+async function requestTwoCards() {
 
-    let deck_id = res.data.deck_id;
+    try {
+        let res = await axios.get(url); // request deck_id of newly shuffled deck
+        let deck_id = res.data.deck_id;
 
-    for (let i=0; i<2; i++) {
-        cardsArr.push(
-            axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`)
-            );
-    }
+        let card1 = await axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`);
+        let card2 = await axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`);
 
-    Promise.all(cardsArr)
-        .then(chosenArr => {
-            for (res of chosenArr) {
-                let value = res.data.cards[0].value;
-                let suit = res.data.cards[0].suit;
-                console.log(`Second round card value is ${value} and card suit is ${suit}`);
-            }
-        })
-        .catch(err => console.log(err));
-})
-.catch(err => console.log("Rejected!", err))
+        let val1 = card1.data.cards[0].value;
+        let suit1 = card1.data.cards[0].suit;
+        let val2 = card2.data.cards[0].value;
+        let suit2 = card2.data.cards[0].suit;
+
+        console.log(`Second round card #1 value is ${val1} and card suit is ${suit1}`);
+        console.log(`Second round card #2 value is ${val2} and card suit is ${suit2}`);
+    } catch (e) {
+        console.log("Error!", e);
+    };
+};
+requestTwoCards();
 
 // 3. 
 
